@@ -1049,6 +1049,8 @@ if [ -n "$have_ip6" ] && [ "$ip6_addr" != "auto" ]; then
         echo "${ip6_addr} ${hostname}.${domainname} ${hostname}" >> /rootfs/etc/hosts || fail
     fi
 fi
+# Tell the kernel what the hostname is supposed to be
+hostname $hostname
 echo "OK"
 
 # networking
