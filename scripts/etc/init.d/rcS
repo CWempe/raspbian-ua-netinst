@@ -222,6 +222,14 @@ mount $bootpartition /boot || fail
 
 cp -r -- /boot/* /bootfs/ || fail
 
+# copy hidden git files from /boot if they exist
+if [ -d "/boot/.git" ]; then
+    cp -r -- /boot/.git /bootfs/ || fail
+fi
+if [ -d "/boot/.gitignore" ]; then
+    cp -- /boot/.gitignore /bootfs/.gitignore || fail
+fi
+
 umount /boot || fail
 echo "OK"
 
