@@ -222,13 +222,25 @@ mount $bootpartition /boot || fail
 
 cp -r -- /boot/* /bootfs/ || fail
 
-# copy hidden git files from /boot if they exist
+# copy hidden git files from /bootfs if they exist
 if [ -d "/boot/.git" ]; then
-    cp -r -- /boot/.git /bootfs/ || fail
+    echo "/boot/.git found. copying ..."
+    cp -r -v -- /boot/.git /bootfs/ || fail
+else
+    echo "/boot/.git not found."
 fi
-if [ -d "/boot/.gitignore" ]; then
-    cp -- /boot/.gitignore /bootfs/.gitignore || fail
+if [ -f "/boot/.gitignore" ]; then
+    echo "/boot/.gitignore found. copying ..."
+    cp -v -- /boot/.gitignore /bootfs/.gitignore || fail
+else
+    echo "/boot/.gitignore not found."
 fi
+
+echo "/bootfs/"
+ls -al /bootfs
+
+echo "/boot/"
+ls -al /boot
 
 umount /boot || fail
 echo "OK"
@@ -738,6 +750,28 @@ echo "OK"
 echo -n "Copying /boot files in... "
 mount $bootpartition /boot || fail
 cp -r -- /bootfs/* /boot || fail
+
+# copy hidden git files from /bootfs if they exist
+if [ -d "/bootfs/.git" ]; then
+    echo "/bootfs/.git found. copying ..."
+    cp -r -v -- /bootfs/.git /boot/ || fail
+else
+    echo "/bootfs/.git not found."
+fi
+if [ -f "/bootfs/.gitignore" ]; then
+    echo "/bootfs/.gitignore found. copying ..."
+    cp -v -- /bootfs/.gitignore /boot/.gitignore || fail
+else
+    echo "/bootfs/.gitignore not found."
+fi
+
+echo "/bootfs/"
+ls -al /bootfs
+
+echo "/boot/"
+ls -al /boot
+
+
 sync
 umount /boot || fail
 echo "OK"
