@@ -2,8 +2,8 @@
 
 set -e
 
-KERNEL_VERSION_RPI1=4.4.0-1-rpi
-KERNEL_VERSION_RPI2=4.4.0-1-rpi2
+KERNEL_VERSION_RPI1=4.9.0-2-rpi
+KERNEL_VERSION_RPI2=4.9.0-2-rpi2
 
 INSTALL_MODULES="kernel/fs/btrfs/btrfs.ko"
 INSTALL_MODULES="$INSTALL_MODULES kernel/drivers/scsi/sg.ko"
@@ -564,7 +564,7 @@ echo "initramfs installer-rpi2.cpio.gz" >> bootfs/config.txt
 # on the rpi3 the uart port is used by bluetooth by default
 # but during the installation we want the serial console
 # the next statement does that, but consequently also disables bluetooth
-echo "enable_uart=1" >> bootfs/config.txt
+echo "enable_uart=0" >> bootfs/config.txt
 
 # rpi zero uses the same kernel/initramfs as rpi1, so just copy the block
 echo "[pi0]" >> bootfs/config.txt
